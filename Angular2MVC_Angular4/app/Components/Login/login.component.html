@@ -1,0 +1,97 @@
+﻿<div style="margin-top:120px">
+    
+    <div *ngIf="!isLoggedIn" class="col-md-6 col-md-offset-3" style="margin-left:27.5%;">
+        <h2 style="text-align:center;display:-webkit-inline-box;padding-left:180px;">Login</h2><img src="../../images/Sports-1.png" style="width:15%" />
+        <form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
+            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" name="username" [(ngModel)]="model.username" #username="ngModel" required />
+                <div *ngIf="f.submitted && !username.valid" class="help-block">Username is required</div>
+            </div>
+            <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" name="password" [(ngModel)]="model.password" #password="ngModel" required />
+                <div *ngIf="f.submitted && !password.valid" class="help-block">Password is required</div>
+            </div>
+            <div class="form-group">
+                <button [disabled]="loading" style="width:522px;background-color:black;" class="btn btn-primary">Login</button>
+                <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                <a (click)="register()" class="btn btn-link">New Member? Register</a>
+                <a (click)="forgotPassword()"  style="font-size:smaller;float:right;" class="btn btn-link">Reset Password?</a>
+            </div>
+        </form>
+        <label  *ngIf="msg" class="alert-danger">{{msg}}</label>
+        <!--<label *ngIf="msg && !invalidPassword" class="alert-info">{{msg}}</label>-->
+    </div>
+    <div *ngIf="isLoggedIn" class="col-md-6 col-md-offset-3" style="margin-left:27.5%;margin-bottom:200px; background-color:#ededed;">
+        <h2 style="text-align:center;color:green;">You are already logged in</h2>
+       
+        <!--<label *ngIf="msg && !invalidPassword" class="alert-info">{{msg}}</label>-->
+    </div>
+</div>
+
+<modal #modal>
+    <form novalidate (ngSubmit)="onSubmit(userFrm)" [formGroup]="userFrm">
+        <modal-header [show-close]="true">
+            <h4 class="modal-title">{{modalTitle}}</h4>
+        </modal-header>
+        <modal-body>
+
+            <div style="background-color:#ededed;" class="form-group">
+                <div [hidden]="isForgotPassword">
+                    <div>
+                        <span>First name*</span>
+                        <input type="text" class="form-control" placeholder="First Name" formControlName="FirstName">
+                    </div>
+                    <div>
+                        <span>Last name</span>
+                        <input type="text" class="form-control" placeholder="Last Name" formControlName="LastName">
+                    </div>
+                    <div>
+                        <span>Gender*</span>
+                        <select formControlName="Gender" class="form-control">
+                            <option>Male</option>
+                            <option>Female</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <span>Role*</span>
+                        <select formControlName="Role" class="form-control">
+                            <option>User</option>
+                            <option>Admin</option>
+                        </select>
+                    </div>
+                    <div>
+                        <span>Company*</span>
+                        <select formControlName="CompanyId" class="form-control">
+                            <option *ngFor="let company of companies" [value]="company.Id">{{company.Name}}({{company.CompanyType}})</option>
+
+                        </select>
+                    </div>
+
+                    <div>
+                        <span>User Name*</span>
+                        <input type="text" class="form-control" placeholder="User Name" formControlName="UserName">
+                    </div>
+                    
+                </div>
+                <div>
+                    <span>{{passwordString}}</span>
+                    <input type="password" class="form-control" placeholder="Password" formControlName="Password">
+                </div>
+                <div>
+                    <span>{{securityQuestion}}*</span>
+                    <input type="text" class="form-control" placeholder="SecurityAnswer" formControlName="SecurityAnswer">
+                </div>
+            </div>
+        </modal-body>
+        <modal-footer>
+            <div>
+                <a class="btn btn-default" (click)="modal.dismiss()">Cancel</a>
+                <button type="submit" [disabled]="userFrm.invalid" class="btn btn-primary">{{modalBtnTitle}}</button>
+            </div>
+        </modal-footer>
+    </form>
+</modal>

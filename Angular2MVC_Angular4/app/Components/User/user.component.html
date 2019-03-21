@@ -1,0 +1,101 @@
+﻿<div class='panel panel-primary'>
+    <p style="width:100%;background-color:cadetblue;color:white;text-align:center;line-height:40px;font:larger;"> User Management</p>
+    <search-list title="Search" (change)="criteriaChange($event)"></search-list><!--<div *ngIf="loggedInUserDetails.UserRole==1 || loggedInUserDetails.UserRole==4 || loggedInUserDetails.UserRole==5" style="padding-left:23px"><button class="btn btn-primary" style="background-color:grey;" (click)="addUser()">Add New User</button></div>-->
+
+    <div class='panel-body'>
+        <div class="alert alert-info" role="alert" *ngIf="indLoading"> Loading...</div>
+        <div *ngIf='users && users.length==0' class="alert alert-info" role="alert">No record found!</div>
+        <div class="containerProduct" *ngIf='users && users.length'>
+            <div class="productOne" *ngFor="let user of users |userFilter:listFilter">
+                <div class="productImg">
+                    <img src="/images/user1.png" height="180px" width="185px" />
+                </div>
+                <div class="productText" style="text-align:center;">
+                    <h4>{{user.FirstName}} {{user.LastName}} ({{user.Role}}) </h4>
+                </div>
+                <div class="productPrice">
+                    <div style="padding-left:25px;"> {{user.UserName}}</div>
+                </div>
+                <div *ngIf="(loggedInUserDetails.UserRole==1 || loggedInUserDetails.UserRole==2 || loggedInUserDetails.UserRole==4) || loggedInUserDetails.Id==user.Id">
+                    <div class="Button" style="float:right;background-color:indianred;">
+                        <a href="#" style="color:whitesmoke;" (click)="deleteUser(user.Id)">DELETE</a>
+                    </div>
+                    <div class="Button" style="background-color:#428bca;">
+                        <a href="#" style="color:whitesmoke;" (click)="editUser(user.Id)">EDIT</a>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <div *ngIf="msg" role="alert" class="alert alert-info alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only">Error:</span>
+        {{msg}}
+    </div>
+</div>
+
+<modal #modal>
+    <form novalidate (ngSubmit)="onSubmit(userFrm)" [formGroup]="userFrm">
+        <modal-header [show-close]="true">
+            <h4 class="modal-title">{{modalTitle}}</h4>
+        </modal-header>
+        <modal-body>
+
+            <div class="form-group">
+                <div>
+                    <span>Full name*</span>
+                    <input type="text" class="form-control" placeholder="First Name" formControlName="FirstName">
+                </div>
+                <div>
+                    <span>Last name</span>
+                    <input type="text" class="form-control" placeholder="Last Name" formControlName="LastName">
+                </div>
+                <div>
+                    <span>Gender*</span>
+                    <select formControlName="Gender" class="form-control">
+                        <option>Male</option>
+                        <option>Female</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <span>User Name*</span>
+                    <input type="text" class="form-control" placeholder="User Name" formControlName="UserName">
+                </div>
+                <div>
+                    <span>Password*</span>
+                    <input type="password" class="form-control" placeholder="Password" formControlName="Password">
+                </div>
+                <div>
+                    <span>Role*</span>
+                    <select formControlName="Role" class="form-control">
+                        <option>User</option>
+                        <option>Admin</option>
+                    </select>
+                </div>
+                <div>
+                    <span>Company*</span>
+                    <select formControlName="CompanyId" class="form-control">
+                        <option *ngFor="let company of companies" [value]="company.Id">{{company.Name}}</option>
+                       
+                    </select>
+                </div>
+                <div>
+                    <span>{{securityQuestion}}*</span>
+                    <input type="text" class="form-control" placeholder="SecurityAnswer" formControlName="SecurityAnswer">
+                </div>
+            </div>
+        </modal-body>
+        <modal-footer>
+            <div>
+                <a class="btn btn-default" (click)="modal.dismiss()">Cancel</a>
+                <button type="submit" [disabled]="userFrm.invalid" class="btn btn-primary">{{modalBtnTitle}}</button>
+            </div>
+        </modal-footer>
+    </form>
+</modal>

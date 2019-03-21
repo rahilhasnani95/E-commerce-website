@@ -1,0 +1,53 @@
+﻿<div style="margin-bottom:100px;">
+    <h2>Items in your bag</h2>
+    <hr />
+    <table *ngIf="cartList && cartList.length>0" class="table-responsive" style="width:100%;">
+        <tr>
+            <th></th>
+            <th>Description</th>
+            <th>Quantity</th>
+            <th>Unit Price</th>
+            <th>Total</th>
+            <th></th>
+        </tr>
+       
+        <tr *ngFor="let item of cartList" style="border: 1px; border-style: solid;border-color: blue;">
+            <td width="30%"><img width="26%" height="14%" src="/images/Product/{{item.ProductImage}}" alt="" /></td>
+            <td>{{item.Description}}</td>
+            <td> <input id="quantityTxt" style="width : 50px; height: 25px;text-align:center;" (blur)="quantityChanged(item,$event)" type="number" [(ngModel)]="item.Quantity" /></td>
+            <td><div id="unitPrice">$ {{item.Price}}</div></td>
+            <td><div id="total">$ {{item.Price*item.Quantity | number : '1.2-2'}}</div></td>
+            <td>
+                <div id="removeBtn" class="Button" style="float:left;background-color:indianred;">
+                    <a href="#" style="color:whitesmoke;" (click)="removeFromCart(item)">Remove</a>
+                </div>
+            </td>
+            <hr />
+        </tr>
+
+        <tr>
+    </table>
+    <h2 *ngIf="cartList && cartList.length==0" class="label-info">There are no items in your Shopping Cart.Please continue shopping.</h2>
+    <hr />
+    <div><input id="continueBtn" type="button" style="background-color: lightgreen;color: black;" value="Continue Shopping" (click)="continueShopping()" /></div>
+    <div *ngIf="cartList && cartList.length>0" style="text-align:center;" id="Summary">
+        <h3><b><u>Summary</u></b></h3>
+
+        <div> Subtotal: $<b>{{subTotalPrice| number : '1.2-2'}}</b></div>
+
+        <br />
+        <div>
+            Shipping: $<i>{{subTotalPrice*shipping | number : '1.2-2'}}</i>
+        </div>
+        <br />
+        <div>
+            Estimated Tax: $<i>{{subTotalPrice*constTax | number : '1.2-2'}}</i>
+        </div>
+        <br />
+        <div>TOTAL: $<b>{{subTotalPrice+((subTotalPrice*constTax)+(subTotalPrice*shipping))| number : '1.2-2'}}</b></div>
+        <br />
+        <input id="checkoutBtn" (click)="ConvertToPO()" type="button" style="background-color: cornflowerblue;color: wheat;" value="Check Out" />
+        <hr />
+    </div>
+   
+</div>

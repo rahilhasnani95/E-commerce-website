@@ -1,0 +1,113 @@
+﻿body {
+}
+/*Cart CSS Start*/
+/*h2 {
+    text-align: center;
+    font-weight: bold;
+}
+
+div {
+    text-align: center;
+}
+
+p {
+    text-align: center;
+}
+
+hr {
+    outline-color: black;
+}
+
+td {
+    text-align: center;
+}
+
+img {
+    text-align: center;
+    width: 50px;
+}*/
+
+#ContinueShoppingBtn {
+    text-align: right;
+}
+/*Cart CSS Ends*/
+
+
+/*Product CSS Starts*/
+
+.containerProduct {
+    width: auto;
+    height: auto;
+    margin: 0 auto;
+    padding-left:30px;
+}
+
+.productOne {
+    float: left;
+    width: 195px;
+    min-height:278px;
+    height:auto;
+    border-radius: 15px;
+    background-color: ghostwhite;
+    padding-bottom: 10px;
+    border-bottom: 2px solid darkgrey;
+    border-right: 1px solid darkgrey;
+    border-left: 1px solid darkgrey;
+    margin-left: 5px;
+    margin-right: 10px;
+}
+
+.productImg {
+    width: 195px;
+    height: 160px;
+    float: left;
+    border: 2px solid;
+    border-radius: 9px;
+    overflow: hidden;
+}
+
+.productText {
+    width: 185px;
+    float: left;
+    margin-top: 10px;
+    padding-left: 5px;
+    text-align:center;
+}
+
+.productPrice {
+    width: 185px;
+    float: left;
+}
+
+.price {
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: -6px;
+    padding-right: 5px;
+    text-align:center;
+}
+
+.Button {
+    display: inline-block;
+    margin: 6px;
+    padding: 4px;
+    border-radius: 5px;
+    border: 1px solid;
+    overflow: hidden;
+    /*background-image: url(../images/background1.jpg);*/
+}
+
+    .Button a {
+        text-decoration: none;
+        color: black;
+    }
+
+    .Button:hover {
+        background-image: none;
+    }
+
+    .Button a:hover {
+        color: black;
+    }
+
+/*Product CSS Ends*/

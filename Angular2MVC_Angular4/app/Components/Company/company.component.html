@@ -1,0 +1,173 @@
+﻿<div class='panel panel-primary'>
+    
+    <!--<div class='panel-body'>
+        <div class='table-responsive'>
+            <div  *ngIf="loggedInUserDetails.UserRole==1" style="padding-bottom:10px"><button class="btn btn-primary" (click)="addCompany()">Add</button></div>
+            <div class="alert alert-info" role="alert" *ngIf="indLoading"><img src="../../images/loading.gif" width="32" height="32" /> Loading...</div>
+            <div *ngIf='companies && companies.length==0' class="alert alert-info" role="alert">No record found!</div>
+            <table class='table table-striped' *ngIf='companies && companies.length'>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Owner</th>
+                        <th>Street</th>
+                        <th>City</th>
+                        <th>State</th>
+                        <th>Country</th>
+                        <th>Company Type</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let company of companies">
+                        <td>{{company.Name}}</td>
+                        <td>{{company.Email}}</td>
+                        <td>{{company.Phone}}</td>
+                        <td>{{company.Owner}}</td>
+                        <td>{{company.Street}}</td>
+                        <td>{{company.City}}</td>
+                        <td>{{company.State}}</td>
+                        <td>{{company.Country}}</td>
+                        <td>{{company.CompanyType}}</td>
+                        <td *ngIf="loggedInUserDetails.UserRole==1">
+                            <button title="Edit" class="btn btn-primary" (click)="editCompany(company.Id)">Edit</button>
+                            <button title="Delete" class="btn btn-danger" (click)="deleteCompany(company.Id)">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div>
+            </div>
+        </div>
+     
+    </div>-->
+
+    <p style="width:100%;background-color:cadetblue;color:white;text-align:center;line-height:40px;font:larger;"> Company Management</p>
+    <!--<search-list title="Search" (change)="criteriaChange($event)"></search-list>--><div  *ngIf="loggedInUserDetails.UserRole==1" style="padding-left:50px"><button class="btn btn-primary" style="background-color:grey;" (click)="addCompany()">Add New Company</button></div>
+
+    <div class='panel-body'>
+        <div class="alert alert-info" role="alert" *ngIf="indLoading"> Loading...</div>
+        <div *ngIf='companies && companies.length==0' class="alert alert-info" role="alert">No record found!</div>
+        <div class="containerProduct">
+            
+            <div class="productOne" style="width:240px;" *ngFor="let company of companies">
+                <div class="productImg"style="width:240px;" >
+                    <img src="/images/Company.jpg" height="170px" width="240px" />
+                </div>
+                <div class="productText" style="text-align:center;width:240px">
+                    <h4>{{company.Name}} ({{company.CompanyType}}) </h4>
+                </div>
+                <div class="productPrice" style="text-align:center;word-wrap:break-word;width:240px">
+                    <div> {{company.Email}}</div>
+                </div>
+                <div class="productPrice" style="text-align:center;width:240px;">
+                    <div> {{company.Phone}}</div>
+                </div>
+                <div *ngIf="loggedInUserDetails.UserRole==1">
+                    <div class="Button" style="float:right;background-color:indianred;">
+                        <a href="#" style="color:whitesmoke;" (click)="deleteCompany(company.Id)">DELETE</a>
+                    </div>
+                    <div class="Button" style="background-color:#428bca;">
+                        <a href="#" style="color:whitesmoke;" (click)="editCompany(company.Id)">EDIT</a>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <div *ngIf="msg" role="alert" class="alert alert-info alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only">Error:</span>
+        {{msg}}
+    </div>
+
+
+</div>
+
+<modal #modal>
+    <form novalidate (ngSubmit)="onSubmit(supplierFrm)" [formGroup]="supplierFrm">
+        <modal-header [show-close]="true">
+            <h4 class="modal-title">{{modalTitle}}</h4>
+        </modal-header>
+        <modal-body>
+
+            <div class="form-group">
+                <div>
+                    <span>Name*</span>
+                    <input type="text" class="form-control" placeholder="Name" formControlName="Name">
+                </div>
+                <div>
+                    <span>Email</span>
+                    <input type="text" class="form-control" placeholder="Email" formControlName="Email">
+                </div>
+                <div>
+                    <span>Phone</span>
+                    <input type="text" class="form-control" placeholder="Phone" formControlName="Phone">
+                </div>
+                <div>
+                    <span>Owner*</span>
+                    <input type="text" class="form-control" placeholder="Owner" formControlName="Owner">
+                </div>
+                <div>
+                    <span>Street</span>
+                    <input type="text" class="form-control" placeholder="Street" formControlName="Street">
+                </div>
+                <div>
+                    <span>City*</span>
+                    <input type="text" class="form-control" placeholder="City" formControlName="City">
+                </div>
+                <div>
+                    <span>DUNS</span>
+                    <input type="text" class="form-control" placeholder="DUNS" formControlName="DUNS">
+                </div>
+                <div>
+                    <span>Compant Type*</span>
+                    <select formControlName="CompanyType" class="form-control">
+                        <option>Buyer</option>
+                        <option>Supplier</option>
+                        
+                    </select>
+                </div>
+                <div>
+                    <span>State*</span>
+                    <select formControlName="State" class="form-control">
+                        <option>Texas</option>
+                        <option>New York</option>
+                        <option>California</option>
+                        <option>Washinton</option>
+                        <option>New Jersey</option>
+                        <option>Oregon</option>
+                        <option>Georgia</option>
+                        <option>Florida</option>
+                    </select>
+                </div>
+                <div>
+                    <span>Country*</span>
+                    <select formControlName="Country" class="form-control">
+                        <option>United States</option>
+                        <option>Canada</option>
+                        <option>Mexico</option>
+                        <option>China</option>
+                        <option>India</option>
+                        <option>France</option>
+                        <option>United Kingdom</option>
+                        <option>Spain</option>
+                        <option>Italy</option>
+                    </select>
+                </div>
+            </div>
+        </modal-body>
+        <modal-footer>
+            <div>
+                <a class="btn btn-default" (click)="modal.dismiss()">Cancel</a>
+                <button type="submit" [disabled]="supplierFrm.invalid" class="btn btn-primary">{{modalBtnTitle}}</button>
+            </div>
+        </modal-footer>
+    </form>
+</modal>

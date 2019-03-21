@@ -1,0 +1,93 @@
+﻿
+<div class='panel panel-primary'>
+    <p style="width:100%;background-color:cadetblue;color:white;text-align:center;line-height:40px;font:larger;"> Product Management</p>
+    <search-list title="Search" (change)="criteriaChange($event)"></search-list><div *ngIf="loggedInUserDetails.UserRole==1 || loggedInUserDetails.UserRole==4 || loggedInUserDetails.UserRole==5" style="padding-left:50px"><button class="btn btn-primary" style="background-color:grey;" (click)="addProduct()">Add New Product</button></div>
+    <div class='panel-body'>
+       
+        <div class="alert alert-info" role="alert" *ngIf="indLoading"> Loading...</div>
+        <div *ngIf='products && products.length==0' class="alert alert-info" role="alert">No record found!</div>
+        <div class="containerProduct"  *ngIf='products && products.length'>
+            <div class="productOne" *ngFor="let product of products|productFilter:listFilter">
+                <div class="productImg">
+                    <img src="/images/Product/{{product.ImagePath}}" height="180px" width="185px" />
+                </div>
+                <div class="productText">
+                    <h4>{{product.Description}}({{product.MaterialCode}})</h4>
+                </div>
+                <div class="productPrice">
+                    <div class="price">{{product.Price|currency}}</div>
+                </div>
+                <div *ngIf="loggedInUserDetails.CompanyDetail" class="productPrice" style="text-align:center;">
+                   provided by <div class="price">{{product.CompanyName}}</div>
+                </div>
+                <div *ngIf="loggedInUserDetails.UserRole!=1 && loggedInUserDetails.UserRole!=4 && loggedInUserDetails.UserRole!=5" class="Button" style="display:block;background-color:greenyellow;text-align:center;">
+                    <a href="#" (click)="addToCart(product)">ADD TO CART</a>
+                </div>
+                <div *ngIf="loggedInUserDetails.UserRole==1 || loggedInUserDetails.UserRole==4 || loggedInUserDetails.UserRole==5">
+                    <div class="Button" style="float:right;background-color:indianred;">
+                        <a href="#" style="color:whitesmoke;" (click)="deleteProduct(product.Id)">DELETE</a>
+                    </div>
+                    <div class="Button" style="background-color:#428bca;">
+                        <a href="#" style="color:whitesmoke;" (click)="editProduct(product.Id)">EDIT</a>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div *ngIf="msg" role="alert" class="alert alert-info alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Error:</span>
+            {{msg}}
+        </div>
+    </div>
+
+</div>
+
+<modal #modal>
+    <form novalidate (ngSubmit)="onSubmit(productFrm)" [formGroup]="productFrm">
+        <modal-header [show-close]="true">
+            <h4 class="modal-title">{{modalTitle}}</h4>
+        </modal-header>
+        <modal-body>
+
+            <div class="form-group">
+                <span>Company*</span>
+                <select [hidden]="loggedInUserDetails.UserRole!=1"  formControlName="CompanyId" class="form-control">
+                    <option *ngFor="let company of companies" [value]="company.Id">{{company.Name}}</option>
+                </select>
+               
+                <div>
+                    <span>MaterialCode*</span>
+                    <input type="text" class="form-control" placeholder="Material Code" formControlName="MaterialCode">
+                </div>
+                <div>
+                    <span>Description*</span>
+                    <input type="text" class="form-control" placeholder="Description" formControlName="Description">
+                </div>
+                <div>
+                    <span>Price*</span>
+                    <input type="number" class="form-control" placeholder="Price in USD" formControlName="Price">
+                </div>
+
+                <div>
+                    <span>Inventory*</span>
+                    <input type="number" class="form-control" placeholder="Inventory" formControlName="Inventory">
+                    
+                </div>
+                <div>
+                    <span>Image*</span>
+                    <input type="file" class="form-control" placeholder="Upload Image" formControlName="ImagePath">
+
+                </div>
+            </div>
+        </modal-body>
+        <modal-footer>
+            <div>
+                <a class="btn btn-default" (click)="modal.dismiss()">Cancel</a>
+                <button type="submit" [disabled]="productFrm.invalid" class="btn btn-primary">{{modalBtnTitle}}</button>
+            </div>
+        </modal-footer>
+    </form>
+</modal>
+ <!--main-->

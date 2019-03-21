@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="UserDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="TblUser">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="LastName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Gender" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Role" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IsLocked" Type="Boolean" Nullable="false" />
+    <Property Name="SecurityAnswer" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="CompanyId" Type="Int32" />
+  </EntityType>
+  <EntityContainer Name="UserDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="TblUsers" EntityType="Self.TblUser" />
+    <EntitySet Name="TblCompanies" EntityType="UserDBModel.TblCompany" />
+    <EntitySet Name="TblProducts" EntityType="UserDBModel.TblProduct" />
+  </EntityContainer>
+  <EntityType Name="TblCompany">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Owner" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Street" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="City" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="State" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Country" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="DUNS" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="CompanyType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="TblProduct">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MaterialCode" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Price" Type="Double" Nullable="false" />
+    <Property Name="Inventory" Type="Int32" Nullable="false" />
+    <Property Name="CompanyId" Type="Int32" Nullable="false" />
+    <Property Name="ImagePath" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+</Schema>
