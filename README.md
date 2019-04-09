@@ -1,0 +1,1 @@
+This is an e-commerce website like eBay for companies to sell their sports products and equipment for sale & for users to place online orders. It allows the admin to add products for sale and users to add the products to cart and check out successfully. Hosted the website on a web hosting server.
